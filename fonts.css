@@ -1,7 +1,7 @@
 /* Font definitions */
 @font-face {
     font-family: 'Le Jour Serif';
-    src: url('../fonts/LeJourSerif.otf') format('opentype');
+    src: url('LeJourSerif.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
