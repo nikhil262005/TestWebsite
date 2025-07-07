@@ -1,0 +1,138 @@
+{
+    "website": {
+      "layout": {
+        "backgroundColor": "#e8e4d9",
+        "fontFamily": "serif",
+        "container": {
+          "maxWidth": "100%",
+          "padding": "20px"
+        }
+      },
+      "header": {
+        "position": "top",
+        "backgroundColor": "transparent",
+        "padding": "20px 0",
+        "elements": {
+          "logo": {
+            "type": "image",
+            "position": "left",
+            "description": "Purple decorative logo with ornate border",
+            "size": "small",
+            "style": "vintage/ornamental"
+          },
+          "navigation": {
+            "type": "horizontal-menu",
+            "position": "right",
+            "alignment": "center-right",
+            "items": [
+              {
+                "text": "Home",
+                "href": "#home",
+                "active": false
+              },
+              {
+                "text": "About",
+                "href": "#about",
+                "active": false
+              },
+              {
+                "text": "Services",
+                "href": "#services",
+                "active": false
+              },
+              {
+                "text": "Pricing",
+                "href": "#pricing",
+                "active": false
+              },
+              {
+                "text": "Contact",
+                "href": "#contact",
+                "active": false
+              }
+            ],
+            "style": {
+              "color": "#8b7c8b",
+              "fontSize": "medium",
+              "fontWeight": "normal",
+              "textDecoration": "none",
+              "spacing": "30px"
+            }
+          }
+        }
+      },
+      "main": {
+        "sections": [
+          {
+            "type": "hero",
+            "layout": "centered",
+            "backgroundColor": "transparent",
+            "padding": "80px 20px",
+            "border": {
+              "style": "solid",
+              "width": "2px",
+              "color": "#8b7c8b",
+              "radius": "0px"
+            },
+            "margin": "40px 0",
+            "content": {
+              "title": {
+                "text": "MUSEUM TO MAUSOLEUM",
+                "style": {
+                  "fontSize": "4rem",
+                  "fontWeight": "normal",
+                  "color": "#b19cd9",
+                  "textAlign": "center",
+                  "letterSpacing": "0.1em",
+                  "lineHeight": "1.2",
+                  "marginBottom": "40px",
+                  "textTransform": "uppercase"
+                }
+              },
+              "subtitle": {
+                "text": "DESIGN THAT SPEAKS YOUR STORY",
+                "style": {
+                  "fontSize": "1.8rem",
+                  "fontWeight": "normal",
+                  "color": "#b19cd9",
+                  "textAlign": "center",
+                  "letterSpacing": "0.15em",
+                  "lineHeight": "1.4",
+                  "textTransform": "uppercase"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "colorPalette": {
+        "primary": "#b19cd9",
+        "secondary": "#8b7c8b",
+        "background": "#e8e4d9",
+        "accent": "#d4c4d4",
+        "text": {
+          "primary": "#b19cd9",
+          "secondary": "#8b7c8b"
+        }
+      },
+      "typography": {
+        "headings": {
+          "fontFamily": "serif",
+          "fontWeight": "normal",
+          "textTransform": "uppercase",
+          "letterSpacing": "wide"
+        },
+        "body": {
+          "fontFamily": "serif",
+          "fontSize": "16px",
+          "lineHeight": "1.6"
+        }
+      },
+      "designTheme": {
+        "style": "elegant-vintage",
+        "mood": "sophisticated",
+        "industry": "creative-services",
+        "keywords": ["museum", "mausoleum", "storytelling", "design", "heritage", "memorial"]
+      }
+    }
+  }

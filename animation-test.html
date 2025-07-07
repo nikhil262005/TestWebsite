@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border Animation Test</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            padding: 50px;
+        }
+        
+        .controls {
+            margin-bottom: 30px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-family: var(--body-font);
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            margin: 0 5px;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .demo-box {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 20px;
+        }
+        
+        .info-panel {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        /* Animation Status */
+        .status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .status.ready {
+            background-color: #e8f4fd;
+            color: #0078d7;
+        }
+        
+        .status.playing {
+            background-color: #e5f8e5;
+            color: #107c10;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h1>Mouse Cursor Drawing Animation</h1>
+            <button id="replay-btn">Play Animation</button>
+            <button id="slow-btn">Slow Motion</button>
+            <button id="normal-btn">Normal Speed</button>
+            <div>
+                <span id="status" class="status ready">Ready to Play</span>
+            </div>
+        </div>
+        
+        <header>
+            <div class="logo">
+                <img src="logo.PNG" alt="Museum to Mausoleum Logo" class="logo-image">
+            </div>
+            <nav>
+            </nav>
+        </header>
+        
+        <section id="demo" class="hero demo-box">
+            <div class="cursor"></div>
+            <div class="border-top"></div>
+            <div class="border-right"></div>
+            <div class="border-bottom"></div>
+            <div class="border-left"></div>
+            <div class="gradient-fill"></div>
+            <h1>
+                <span class="rotate-text">M</span>
+                <span class="rotate-text">U</span>
+                <span class="rotate-text">S</span>
+                <span class="rotate-text">E</span>
+                <span class="rotate-text">U</span>
+                <span class="rotate-text">M</span>
+                <span class="rotate-text">&nbsp;</span>
+                <span class="rotate-text">T</span>
+                <span class="rotate-text">O</span>
+                <span class="rotate-text">&nbsp;</span>
+                <span class="rotate-text">M</span>
+                <span class="rotate-text">A</span>
+                <span class="rotate-text">U</span>
+                <span class="rotate-text">S</span>
+                <span class="rotate-text">O</span>
+                <span class="rotate-text">L</span>
+                <span class="rotate-text">E</span>
+                <span class="rotate-text">U</span>
+                <span class="rotate-text">M</span>
+            </h1>
+            <h2><span class="blur-text">DESIGN</span> <span class="blur-text">THAT</span> <span class="blur-text">SPEAKS</span> <span class="blur-text">YOUR</span> <span class="blur-text">STORY</span></h2>
+        </section>
+        
+        <div class="info-panel">
+            <h3>About This Animation</h3>
+            <p>This animation simulates a person manually drawing a rectangle with a mouse cursor, like you would create a rectangle in Figma or other design tools.</p>
+            <p>The animation sequence:</p>
+            <ol>
+                <li>The cursor appears at the top-left corner</li>
+                <li>It draws the top border from left to right</li>
+                <li>Then the right border from top to bottom</li>
+                <li>Next the bottom border from right to left</li>
+                <li>Finally the left border from bottom to top to complete the rectangle</li>
+                <li>The cursor disappears and the content fades in</li>
+            </ol>
+            <p>The cursor rotation and slight movement variations make it look like a real person is drawing the border by hand.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const demoBox = document.getElementById('demo');
+            const replayBtn = document.getElementById('replay-btn');
+            const slowBtn = document.getElementById('slow-btn');
+            const normalBtn = document.getElementById('normal-btn');
+            const statusIndicator = document.getElementById('status');
+            
+            // Play animation function
+            function playAnimation() {
+                // Reset animation
+                demoBox.classList.remove('play');
+                
+                // Remove all existing animation styles
+                document.querySelectorAll('#demo *').forEach(el => {
+                    if(el.style.animation) el.style.animation = '';
+                });
+                
+                // Force reflow
+                void demoBox.offsetWidth;
+                
+                // Add the play class
+                demoBox.classList.add('play');
+                
+                // Update status
+                statusIndicator.className = "status playing";
+                statusIndicator.textContent = "Animation Playing";
+                
+                // Reset status after animation
+                setTimeout(() => {
+                    statusIndicator.className = "status ready";
+                    statusIndicator.textContent = "Ready to Play";
+                }, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--content-fade-delay')) * 1000 + 1000);
+            }
+            
+            // Initial play after a delay
+            setTimeout(playAnimation, 500);
+            
+            // Replay button
+            replayBtn.addEventListener('click', playAnimation);
+            
+            // Slow motion
+            slowBtn.addEventListener('click', () => {
+                document.documentElement.style.setProperty('--border-animation-duration', '6s');
+                document.documentElement.style.setProperty('--content-fade-delay', '6.2s');
+                playAnimation();
+            });
+            
+            // Normal speed
+            normalBtn.addEventListener('click', () => {
+                document.documentElement.style.setProperty('--border-animation-duration', '3s');
+                document.documentElement.style.setProperty('--content-fade-delay', '3.2s');
+                playAnimation();
+            });
+        });
+    </script>
+</body>
+</html> 

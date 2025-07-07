@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Test - Le Jour Serif</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            font-family: 'Le Jour Serif', serif;
+            color: #b19cd9;
+        }
+        .test-container {
+            margin: 40px 0;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+        .fallback {
+            font-family: 'Times New Roman', serif;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Le Jour Serif Font Test</h1>
+    
+    <div class="status" id="fontStatus">
+        Checking font status...
+    </div>
+    
+    <div class="test-container">
+        <h2>This heading should be in Le Jour Serif</h2>
+        <p>This paragraph is in the default font. Below is a comparison.</p>
+        
+        <div style="font-family: 'Le Jour Serif', serif;">
+            <p>This text should be in Le Jour Serif</p>
+            <p style="font-weight: bold;">Bold text in Le Jour Serif</p>
+            <p style="font-style: italic;">Italic text in Le Jour Serif (if available)</p>
+        </div>
+        
+        <div class="fallback">
+            <p>This text is in the fallback font (Times New Roman)</p>
+        </div>
+    </div>
+    
+    <script>
+        document.fonts.ready.then(function() {
+            const status = document.getElementById('fontStatus');
+            
+            if (document.fonts.check('1em "Le Jour Serif"')) {
+                status.innerHTML = '✓ Le Jour Serif font loaded successfully!';
+                status.style.backgroundColor = '#e6ffe6';
+                status.style.border = '1px solid #99cc99';
+            } else {
+                status.innerHTML = '✗ Le Jour Serif font failed to load. Using fallback font instead.';
+                status.style.backgroundColor = '#ffe6e6';
+                status.style.border = '1px solid #cc9999';
+            }
+        });
+    </script>
+</body>
+</html> 

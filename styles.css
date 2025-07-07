@@ -1,0 +1,2540 @@
+/* Base styling */
+:root {
+    --primary: #6A4C93;
+    --secondary: #28536B;
+    --background: #F8F4E3;
+    --accent: #B19CD9;
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --heading-font: 'Le Jour Serif', serif;
+    --body-font: 'Playfair Display', serif;
+    --nav-font: 'Darker Grotesque', sans-serif;
+    --mobile-breakpoint: 768px;
+    
+    /* Font size variables for easier responsive scaling */
+    --h1-size: 4rem;
+    --h2-size: 2.5rem;
+    --h3-size: 1.8rem;
+    --body-size: 1rem;
+    --nav-size: 17px;
+    
+    /* Animation timing variables */
+    --border-animation-duration: 0.7s; /* Simple fade animation duration */
+    --content-fade-delay: 0.8s;
+    --cursor-size: 20px;
+    --blur-animation-duration: 1.8s;
+    --rotate-animation-duration: 1.2s;
+    --gradient-animation-delay: 0.7s; /* Start gradient after rectangle fade completes */
+    --gradient-animation-duration: 0.8s;
+    --gradient-color-start: #F3A5BC;
+    --gradient-color-end: #CCB6C7;
+    --rotate-animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.1s);
+    --subtitle-animation-delay: calc(var(--rotate-animation-delay) + var(--rotate-animation-duration) + 0.45s + 0.2s);
+    --auto-glare-delay: calc(var(--subtitle-animation-delay) + var(--blur-animation-duration) - 0.7s); /* Delay for auto glare after subtitle animation */
+    --glare-position: 50%;
+    --scroll-speed-1: 80s;
+    --scroll-speed-2: 95s;
+    --scroll-speed-3: 85s;
+    
+    /* Card color variables - customize these for each card */
+    --card-color-1: 79, 44, 35;   /* real bleeding nose*/
+    --card-color-1-2: 79, 44, 35;   /* real bleeding nose*/
+    --card-color-2: 173, 55, 61;   /* Blue */
+    --card-color-3: 255, 204, 102;   /* Yellow */
+    --card-color-4: 153, 102, 255;   /* Purple */
+    --card-color-5: 223, 105, 51;   /* Real Fox */
+    --card-color-6: 227, 181, 171;   /* bleeding nose*/
+    --card-color-7: 204, 255, 102;   /* Lime */
+    --card-color-8: 113, 167, 187;   /* Light Blue */
+    --card-color-9: 255, 255, 255;   /* Magenta */
+    --split-text-animation-delay: 0.5s;
+    --split-text-animation-duration: 0.8s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--background);
+    color: var(--text-secondary);
+    font-size: var(--body-size);
+    line-height: 1.6;
+}
+
+/* Layout */
+.container {
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* No additional padding needed for main as container has padding */
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--background);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    max-width: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.logo-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+    transform: translateZ(20px);
+}
+
+/* Navigation */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li:first-child {
+    margin-left: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-family: var(--nav-font);
+    font-size: 18px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    letter-spacing: 0.05em;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--primary);
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+nav ul li a.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+nav ul li a.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Mobile menu button (hidden by default) */
+
+/* Mobile menu overlay */
+
+/* Hero Section */
+.hero {
+    position: relative;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 100px 20px;
+    overflow: hidden;
+    z-index: 1;
+    isolation: isolate; /* Create stacking context for glare effect */
+    transition: transform 0.3s ease;
+}
+
+/* Simple rectangle with fade-in animation */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--secondary);
+    z-index: 1;
+    opacity: 0;
+    animation: fadeInRectangle var(--border-animation-duration) ease-in-out forwards;
+    box-shadow: 0 0 10px rgba(40, 83, 107, 0.2);
+}
+
+@keyframes fadeInRectangle {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Remove old border elements and animations */
+.hero .cursor,
+.hero .border-top,
+.hero .border-right,
+.hero .border-bottom,
+.hero .border-left {
+    display: none;
+}
+
+/* Glare hover effect */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hero:hover::before {
+    animation: glare 1.5s ease-in-out;
+    opacity: 1;
+    left: var(--glare-position);
+    transform: translateX(-50%);
+}
+
+@keyframes glare {
+    0% {
+        transform: translateX(-150%);
+    }
+    100% {
+        transform: translateX(50%);
+    }
+}
+
+/* Auto glare animation for mobile devices */
+@keyframes autoGlare {
+    0% {
+        opacity: 0;
+        transform: translate(-100%, 100%); /* Start from bottom left */
+    }
+    10% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(100%, -100%); /* Move to top right */
+    }
+}
+
+/* Subtle tilt effect on hover - base styles only, JS will enhance */
+.hero:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Virtual cursor animation */
+.hero .cursor {
+    position: absolute;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="%23333" d="M3,2 L13,12 L8.5,12 L11,18 L9,19 L6.5,13 L3,16 L3,2 Z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transform: rotate(-45deg);
+    display: none; /* Temporarily hide the cursor */
+}
+
+.hero.play .cursor {
+    animation: moveCursor var(--border-animation-duration) linear forwards;
+    opacity: 1;
+    display: none; /* Ensure it stays hidden even when playing */
+}
+
+/* Border drawing animations */
+@keyframes drawBorderTop {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+@keyframes drawBorderRight {
+    0% { height: 0; }
+    100% { height: 100%; }
+}
+
+@keyframes drawBorderBottom {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+@keyframes drawBorderLeft {
+    0% { height: 0; }
+    100% { height: 100%; }
+}
+
+.hero h1 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.5rem, 5vw, var(--h1-size));
+    font-weight: normal;
+    color: var(--primary);
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 1.2;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    perspective: 1000px;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero h2 {
+    font-family: var(--heading-font);
+    font-size: var(--h3-size);
+    font-weight: normal;
+    color: var(--primary);
+    text-align: center;
+    letter-spacing: 0.15em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    opacity: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.blur-text {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(10px);
+    animation: blurReveal var(--blur-animation-duration) forwards;
+    animation-play-state: paused;
+}
+
+.hero.play .blur-text {
+    animation-play-state: running;
+}
+
+.blur-text:nth-child(1) { animation-delay: calc(var(--subtitle-animation-delay) + 0.1s); }
+.blur-text:nth-child(2) { animation-delay: calc(var(--subtitle-animation-delay) + 0.3s); }
+.blur-text:nth-child(3) { animation-delay: calc(var(--subtitle-animation-delay) + 0.5s); }
+.blur-text:nth-child(4) { animation-delay: calc(var(--subtitle-animation-delay) + 0.7s); }
+.blur-text:nth-child(5) { animation-delay: calc(var(--subtitle-animation-delay) + 0.9s); }
+
+@keyframes blurReveal {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+.hero.play h1 {
+    animation-play-state: running;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Sections */
+.section {
+    padding: 60px 20px;
+    margin: 20px 0;
+    position: relative;
+    text-align: center; /* Center all content in sections */
+}
+
+.section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    background-color: var(--secondary);
+    opacity: 0.3;
+}
+
+.section:last-of-type::after {
+    display: none;
+}
+
+.section h2 {
+    font-family: var(--heading-font);
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: var(--h2-size);
+    position: relative;
+    display: block;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.section h2::after {
+    display: none;
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: var(--body-size);
+    line-height: 1.8;
+}
+
+.content p {
+    margin-bottom: 1.2em;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--secondary);
+    font-size: calc(var(--body-size) * 0.9);
+    opacity: 0.8;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    :root {
+        --h1-size: 3.5rem;
+        --h2-size: 2.2rem;
+        --h3-size: 1.6rem;
+    }
+}
+
+@media (max-width: 992px) {
+    :root {
+        --h1-size: 3rem;
+        --h2-size: 2rem;
+        --h3-size: 1.4rem;
+        --scroll-speed-1: 65s;
+        --scroll-speed-2: 80s;
+        --scroll-speed-3: 70s;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --h1-size: 2.5rem;
+        --h2-size: 1.8rem;
+        --h3-size: 1.2rem;
+        --body-size: 0.95rem;
+        --nav-size: 14px;
+        --scroll-speed-1: 55s;
+        --scroll-speed-2: 65s;
+        --scroll-speed-3: 60s;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 15px 0;
+    }
+    
+    /* Hide header completely on mobile */
+    header {
+        display: none;
+    }
+    
+    /* Remove the padding-top since header is hidden */
+    .container {
+        padding-top: 40px;
+    }
+    
+    /* Remove the margin-top from hero section since header is hidden */
+    .hero {
+        margin-top: 0;
+        padding: 100px 20px;
+    }
+    
+    /* Auto glare effect for mobile devices */
+    .hero.play::before {
+        animation: autoGlare 3s ease-in-out;
+        animation-delay: var(--auto-glare-delay);
+        animation-fill-mode: forwards;
+        opacity: 0;
+        left: 0;
+        top: auto;
+        bottom: 0;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0) 40%,
+            rgba(255, 255, 255, 0.6) 50%,
+            rgba(255, 255, 255, 0) 60%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        transform: translate(0, 0);
+    }
+    
+    .section {
+        padding: 40px 15px;
+    }
+    
+    .content {
+        padding: 0 10px;
+    }
+    
+    .design-item {
+        flex: 0 0 250px;
+        height: 200px;
+    }
+    
+    .hero h1 {
+        font-size: clamp(1.2rem, 4.5vw, 2.5rem);
+        letter-spacing: -0.02em;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --h1-size: 2rem;
+        --h2-size: 1.5rem;
+        --h3-size: 1.1rem;
+        --body-size: 0.9rem;
+        --nav-size: 13px;
+        .design-item {
+            flex: 0 0 200px;
+            height: 150px;
+        }
+    }
+    
+    .hero {
+        padding: 120px 15px;
+    }
+    
+    .section {
+        padding: 30px 10px;
+    }
+    
+    /* Maintain consistent letter spacing at smaller sizes */
+    .hero h1 {
+        letter-spacing: 0.08em;
+    }
+    
+    .hero h2 {
+        letter-spacing: 0.1em;
+    }
+    
+    .hero h1 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        letter-spacing: -0.05em;
+    }
+}
+
+@media (max-width: 375px) {
+    :root {
+        --h1-size: 1.8rem;
+        --h2-size: 1.4rem;
+        --h3-size: 1rem;
+        --body-size: 0.85rem;
+    }
+    
+    .hero {
+        padding: 100px 10px;
+    }
+    
+    .hero h1 {
+        font-size: clamp(0.8rem, 3.8vw, 1.8rem);
+        letter-spacing: -0.08em;
+    }
+}
+
+/* Gradient fill animation */
+.gradient-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at bottom left, var(--gradient-color-start), var(--gradient-color-end));
+    opacity: 0;
+    z-index: 1;
+    transform-origin: bottom left;
+    clip-path: circle(0% at bottom left);
+    filter: blur(5px);
+    animation: gradientFill var(--gradient-animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-play-state: paused;
+    will-change: clip-path, opacity; /* Performance optimization */
+}
+
+.hero.play .gradient-fill {
+    animation-play-state: running;
+    animation-delay: var(--gradient-animation-delay);
+}
+
+@keyframes gradientFill {
+    0% {
+        opacity: 0;
+        clip-path: circle(0% at bottom left);
+    }
+    40% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.2;
+        clip-path: circle(150% at bottom left);
+    }
+}
+
+/* Update rotate text animation delay to start after gradient fill */
+.rotate-text {
+    display: inline-block;
+    opacity: 0;
+    transform: rotateY(90deg) translateZ(10px);
+    transform-origin: left center;
+    animation: rotateReveal var(--rotate-animation-duration) forwards;
+    animation-play-state: paused;
+    margin-right: -0.05em;
+    letter-spacing: 0;
+}
+
+.hero.play .rotate-text {
+    animation-play-state: running;
+}
+
+/* Adjust the animation delays to start after gradient fill */
+.rotate-text:nth-child(1) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.05s); }
+.rotate-text:nth-child(2) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.1s); }
+.rotate-text:nth-child(3) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.15s); }
+.rotate-text:nth-child(4) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.2s); }
+.rotate-text:nth-child(5) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.25s); }
+.rotate-text:nth-child(6) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.3s); }
+.rotate-text:nth-child(7) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.35s); }
+.rotate-text:nth-child(8) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.4s); }
+.rotate-text:nth-child(9) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.45s); }
+.rotate-text:nth-child(10) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.5s); }
+.rotate-text:nth-child(11) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.55s); }
+.rotate-text:nth-child(12) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.6s); }
+.rotate-text:nth-child(13) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.65s); }
+.rotate-text:nth-child(14) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.7s); }
+.rotate-text:nth-child(15) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.75s); }
+.rotate-text:nth-child(16) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.8s); }
+.rotate-text:nth-child(17) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.85s); }
+.rotate-text:nth-child(18) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.9s); }
+.rotate-text:nth-child(19) { animation-delay: calc(var(--gradient-animation-delay) + var(--gradient-animation-duration) + 0.95s); }
+
+@keyframes rotateReveal {
+    0% {
+        opacity: 0;
+        transform: rotateY(90deg) translateZ(10px);
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0deg) translateZ(0);
+    }
+}
+
+/* Add a specific class for spaces to control their width */
+.rotate-text:nth-child(7),
+.rotate-text:nth-child(10) {
+    margin-right: 0.2em;
+}
+
+.hero.play .border-top,
+.hero.play .border-right,
+.hero.play .border-bottom,
+.hero.play .border-left {
+    display: none;
+}
+
+/* React Bits Style Infinite Scroll Animation */
+.rb-infinite-scroll {
+    position: relative;
+    width: 100%;
+    height: 680px;
+    margin: 40px 0 60px;
+    perspective: 1000px;
+    overflow: hidden;
+}
+
+.rb-scroll-container {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    transform: rotateX(10deg) rotateZ(0deg);
+    transform-style: preserve-3d;
+}
+
+.rb-scroll-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.rb-scroll-row {
+    position: absolute;
+    display: flex;
+    gap: 22px;
+    width: 200%;
+    height: 200px;
+    animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    transition: animation-play-state 0.3s ease;
+}
+
+/* Position the rows with better spacing to fill gaps */
+.rb-scroll-row:nth-child(1) {
+    top: 5%;
+    animation-name: scrollLeft;
+    animation-duration: var(--scroll-speed-1);
+    z-index: 3;
+}
+
+.rb-scroll-row:nth-child(2) {
+    top: 38%;
+    animation-name: scrollRight;
+    animation-duration: var(--scroll-speed-2);
+    z-index: 2;
+}
+
+.rb-scroll-row:nth-child(3) {
+    top: 71%;
+    animation-name: scrollLeft;
+    animation-duration: var(--scroll-speed-3);
+    z-index: 1;
+}
+
+/* Adjust item sizing for better fit */
+.rb-design-item {
+    flex: 0 0 290px;
+    height: 190px;
+    position: relative;
+    margin: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-shadow: none;
+    transform: translateZ(0);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.rb-design-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.5s ease;
+    background: none;
+    padding: 0;
+    filter: none;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.rb-design-item:hover {
+    transform: translateZ(20px) scale(1.05);
+    z-index: 10;
+    border-color: rgba(0, 0, 0, 0.6);
+}
+
+.rb-design-item:hover img {
+    filter: none;
+}
+
+/* More professional gallery movement */
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scrollRight {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Pause animation on hover */
+.rb-infinite-scroll:hover .rb-scroll-row {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments for better organization */
+@media (max-width: 992px) {
+    .rb-infinite-scroll {
+        height: 550px;
+    }
+    
+    .rb-design-item {
+        flex: 0 0 250px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rb-infinite-scroll {
+        height: 450px;
+    }
+    
+    .rb-design-item {
+        flex: 0 0 210px;
+        height: 140px;
+    }
+    
+    .rb-scroll-row {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .rb-infinite-scroll {
+        height: 350px;
+    }
+    
+    .rb-design-item {
+        flex: 0 0 160px;
+        height: 110px;
+    }
+    
+    .rb-scroll-row {
+        gap: 15px;
+    }
+}
+
+/* Remove active state styling */
+.rb-design-item.active {
+    transform: none;
+    z-index: auto;
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+.rb-design-item.active img {
+    filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.2));
+}
+
+/* React Bits Tilted Card Gallery */
+.rb-gallery {
+    position: relative;
+    width: 100%;
+    padding: 60px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    perspective: 1000px;
+}
+
+.rb-card {
+    position: relative;
+    width: 280px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.rb-card-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(31, 38, 135, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    --glare-opacity: 0;
+    --glare-angle: 135deg;
+}
+
+.rb-card-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateZ(20px);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Enhanced glare effect */
+.rb-card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        var(--glare-angle),
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.5) 80%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    opacity: var(--glare-opacity);
+    transition: opacity 0.4s ease;
+    z-index: 2;
+    pointer-events: none;
+    transform: translate(-25%, -25%);
+}
+
+.rb-card:hover .rb-card-inner {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+/* Remove old infinite scroll styles */
+.rb-infinite-scroll,
+.rb-scroll-container,
+.rb-scroll-track,
+.rb-scroll-row,
+.rb-design-item {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .rb-gallery {
+        gap: 25px;
+    }
+    
+    .rb-card {
+        width: 240px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rb-gallery {
+        gap: 20px;
+    }
+    
+    .rb-card {
+        width: 200px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .rb-gallery {
+        gap: 15px;
+    }
+    
+    .rb-card {
+        width: 160px;
+        height: 120px;
+    }
+}
+
+/* Horizontal Scrolling Gallery */
+.horizontal-gallery {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin: 60px 0;
+    overflow: hidden;
+}
+
+.gallery-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease-out;
+    padding: 0 5%;
+    user-select: none;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.gallery-item {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    margin: 0 15px;
+    flex-shrink: 0;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    user-select: none;
+    will-change: transform;
+}
+
+.gallery-item-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --glare-x: 50%;
+    --glare-y: 50%;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glare-opacity: 0;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
+    user-select: none;
+    will-change: transform, filter;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.gallery-item-inner img {
+    position: relative;
+    z-index: 2;
+    transform: translateZ(30px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform;
+    /* Center alignment properties */
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-position: center;
+}
+
+/* Prevent image dragging */
+.gallery-item img, 
+.gallery-item-inner {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+/* Make the container draggable instead */
+.gallery-container {
+    cursor: grab;
+    pointer-events: auto;
+}
+
+.gallery-container:active {
+    cursor: grabbing;
+}
+
+.gallery-item {
+    pointer-events: auto;
+}
+
+.gallery-item-inner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.6) 80%,
+        rgba(255, 255, 255, 0.3) 100%
+    );
+    opacity: var(--glare-opacity);
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 3;
+    pointer-events: none;
+    transform: translate(calc(var(--glare-x) - 50%), calc(var(--glare-y) - 50%)) rotate(var(--glare-angle, 0deg));
+    mix-blend-mode: soft-light;
+    will-change: transform, opacity;
+}
+
+.gallery-item:hover .gallery-item-inner::before {
+    opacity: 0.8;
+}
+
+/* Add more depth to the cards with enhanced shadows */
+.gallery-item:hover .gallery-item-inner {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Add reflection effect */
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 10%;
+    right: 10%;
+    height: 20px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(5px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.gallery-item:hover::after {
+    opacity: 0.7;
+}
+
+/* Add frosted glass texture */
+.gallery-item-inner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0icGF0dGVybiIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiPjxwYXRoIGQ9Ik0gMjUgMCBMIDc1IDEwMCBNIDAgMjUgTCAxMDAgNzUgTSA3NSAwIEwgMjUgMTAwIE0gMTAwIDI1IEwgMCA3NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjcGF0dGVybikiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIi8+PC9zdmc+');
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 16px;
+}
+
+.gallery-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 10;
+}
+
+.gallery-control {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 20px;
+}
+
+.gallery-control:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Hide circular gallery styles */
+.circular-gallery {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .gallery-item {
+        width: 250px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .horizontal-gallery {
+        height: 400px;
+    }
+    
+    .gallery-item {
+        width: 200px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .horizontal-gallery {
+        height: 350px;
+    }
+    
+    .gallery-item {
+        width: 160px;
+        height: 250px;
+    }
+    
+    .gallery-controls {
+        bottom: 10px;
+        gap: 10px;
+    }
+    
+    .gallery-control {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+/* Individual card styling - apply to both original and cloned items */
+.gallery-item:nth-child(9n+1) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-1), 0.3), rgba(var(--card-color-1-2), 0.3));
+    border-color: rgba(var(--card-color-1), 0.1);
+}
+
+.gallery-item:nth-child(9n+2) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-2), 0.05), rgba(var(--card-color-2), 0.01));
+    border-color: rgba(var(--card-color-2), 0.1);
+}
+
+.gallery-item:nth-child(9n+3) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-3), 0.05), rgba(var(--card-color-3), 0.01));
+    border-color: rgba(var(--card-color-3), 0.1);
+}
+
+.gallery-item:nth-child(9n+4) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-4), 0.05), rgba(var(--card-color-4), 0.01));
+    border-color: rgba(var(--card-color-4), 0.1);
+}
+
+.gallery-item:nth-child(9n+5) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-5), 0.05), rgba(var(--card-color-5), 0.01));
+    border-color: rgba(var(--card-color-5), 0.1);
+}
+
+.gallery-item:nth-child(9n+6) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-6), 0.05), rgba(var(--card-color-6), 0.01));
+    border-color: rgba(var(--card-color-6), 0.1);
+}
+
+.gallery-item:nth-child(9n+7) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-7), 0.05), rgba(var(--card-color-7), 0.01));
+    border-color: rgba(var(--card-color-7), 0.1);
+}
+
+.gallery-item:nth-child(9n+8) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-8), 0.05), rgba(var(--card-color-8), 0.01));
+    border-color: rgba(var(--card-color-8), 0.1);
+}
+
+.gallery-item:nth-child(9n+9) .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-9), 0.05), rgba(var(--card-color-9), 0.01));
+    border-color: rgba(var(--card-color-9), 0.1);
+}
+
+/* Enhanced hover effects with custom colors - apply to both original and cloned items */
+.gallery-item:nth-child(9n+1):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-1), 0.08), rgba(var(--card-color-1), 0.03));
+    border-color: rgba(var(--card-color-1), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-1), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+2):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-2), 0.08), rgba(var(--card-color-2), 0.03));
+    border-color: rgba(var(--card-color-2), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-2), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+3):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-3), 0.08), rgba(var(--card-color-3), 0.03));
+    border-color: rgba(var(--card-color-3), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-3), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+4):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-4), 0.08), rgba(var(--card-color-4), 0.03));
+    border-color: rgba(var(--card-color-4), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-4), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+5):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-5), 0.08), rgba(var(--card-color-5), 0.03));
+    border-color: rgba(var(--card-color-5), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-5), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+6):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-6), 0.08), rgba(var(--card-color-6), 0.03));
+    border-color: rgba(var(--card-color-6), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-6), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+7):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-7), 0.08), rgba(var(--card-color-7), 0.03));
+    border-color: rgba(var(--card-color-7), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-7), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+8):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-8), 0.08), rgba(var(--card-color-8), 0.03));
+    border-color: rgba(var(--card-color-8), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-8), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:nth-child(9n+9):hover .gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(var(--card-color-9), 0.08), rgba(var(--card-color-9), 0.03));
+    border-color: rgba(var(--card-color-9), 0.3);
+    box-shadow: 0 15px 35px rgba(var(--card-color-9), 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Default gallery item inner style to ensure all cards have a base style */
+.gallery-item-inner {
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure the default hover style doesn't override our custom ones */
+.gallery-item:hover .gallery-item-inner {
+    border-color: inherit;
+    background-image: inherit;
+    box-shadow: inherit;
+}
+
+/* Individual image size adjustments for each gallery item */
+/* First gallery item - 0-Photoroom.png */
+.gallery-item:nth-child(1) .gallery-item-inner img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+}
+
+/* Second gallery item - 1-Photoroom.png */
+.gallery-item:nth-child(2) .gallery-item-inner img {
+    width: 75%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+}
+
+/* Third gallery item - 2-Photoroom.png */
+.gallery-item:nth-child(3) .gallery-item-inner img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+}
+
+/* Fourth gallery item - 3-Photoroom.png */
+.gallery-item:nth-child(4) .gallery-item-inner img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+}
+
+/* Fifth gallery item - 4.png */
+.gallery-item:nth-child(5) .gallery-item-inner img,
+.masonry-item:nth-child(5) .masonry-item-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) translateZ(0);
+}
+
+/* Sixth gallery item - 5.png */
+.gallery-item:nth-child(6) .gallery-item-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+}
+
+/* Seventh gallery item - 6-Photoroom.png */
+.gallery-item:nth-child(7) .gallery-item-inner img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+}
+
+/* Eighth gallery item - design_1.png */
+.gallery-item:nth-child(8) .gallery-item-inner img,
+.masonry-item:nth-child(8) .masonry-item-inner img {
+    width: 160%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+    position: absolute;
+    top: 65%;
+    left: 55%;
+    transform: translate(-50%, -50%) translateZ(0);
+}
+
+/* Ninth gallery item - 8.jpeg */
+.gallery-item:nth-child(9) .gallery-item-inner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transform-origin: center center;
+}
+
+/* Apply the same styles to cloned items */
+.gallery-item.clone:nth-child(9n+1) .gallery-item-inner img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+2) .gallery-item-inner img {
+    width: 75%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+3) .gallery-item-inner img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+4) .gallery-item-inner img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+5) .gallery-item-inner img,
+.masonry-item.clone:nth-child(9n+5) .masonry-item-inner img {
+    width: 200%;
+    height: 200%;
+    object-fit: cover;
+    transform-origin: center center;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) translateZ(30px);
+}
+
+.gallery-item.clone:nth-child(9n+6) .gallery-item-inner img {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+7) .gallery-item-inner img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+}
+
+.gallery-item.clone:nth-child(9n+8) .gallery-item-inner img,
+.masonry-item.clone:nth-child(9n+8) .gallery-item-inner img {
+    width: 160%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateZ(0);
+}
+
+.gallery-item.clone:nth-child(9n+9) .gallery-item-inner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Fix hover behavior for the fifth item */
+.masonry-item:nth-child(5):hover .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(0);
+    /* Preserve the positioning during hover */
+}
+
+/* Fix hover behavior for the fifth item with tilt effect */
+.masonry-item.tilt-card:nth-child(5) .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(0);
+}
+
+.masonry-item.tilt-card:nth-child(5):hover .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(20px);
+}
+
+/* Specific handling for the fifth item's tilt effect */
+.masonry-item.tilt-card:nth-child(5) .tilt-card-inner {
+    overflow: hidden;
+}
+
+/* Fix hover behavior for cloned fifth item */
+.gallery-item.clone:nth-child(9n+5) .gallery-item-inner img,
+.masonry-item.clone:nth-child(9n+5) .masonry-item-inner img {
+    width: 200%;
+    height: 200%;
+    object-fit: cover;
+    transform-origin: center center;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) translateZ(30px);
+}
+
+/* React Bits Masonry Gallery */
+.masonry-gallery {
+    width: 90%;
+    max-width: 1400px;
+    margin: 60px auto;
+    columns: 3;
+    column-gap: 30px;
+    position: relative;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 30px;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), 
+                box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, box-shadow;
+    background-color: #fff;
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: opacity, transform;
+}
+
+.masonry-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    z-index: 2;
+}
+
+.masonry-item.fade-in {
+    animation: fadeUpImage 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    will-change: opacity, transform;
+}
+
+/* Staggered animation delays for masonry items */
+.masonry-item:nth-child(1).fade-in { animation-delay: 0.1s; }
+.masonry-item:nth-child(2).fade-in { animation-delay: 0.2s; }
+.masonry-item:nth-child(3).fade-in { animation-delay: 0.3s; }
+.masonry-item:nth-child(4).fade-in { animation-delay: 0.4s; }
+.masonry-item:nth-child(5).fade-in { animation-delay: 0.5s; }
+.masonry-item:nth-child(6).fade-in { animation-delay: 0.6s; }
+.masonry-item:nth-child(7).fade-in { animation-delay: 0.7s; }
+.masonry-item:nth-child(8).fade-in { animation-delay: 0.8s; }
+.masonry-item:nth-child(9).fade-in { animation-delay: 0.9s; }
+
+.masonry-item-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glare-x: 50%;
+    --glare-y: 50%;
+    --glare-angle: 135deg;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
+    backface-visibility: hidden; /* Performance optimization */
+}
+
+/* Remove the dark gradient that appears on hover */
+.masonry-item-inner::after {
+    display: none;
+}
+
+.masonry-item-inner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        var(--glare-angle),
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.6) 80%,
+        rgba(255, 255, 255, 0.3) 100%
+    );
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    transform: translate(calc(var(--glare-x) - 50%), calc(var(--glare-y) - 50%));
+}
+
+.masonry-item:hover .masonry-item-inner::before {
+    opacity: 0.7;
+}
+
+.masonry-item-inner img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: translateZ(0);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    backface-visibility: hidden;
+    object-fit: cover;
+    border-radius: 12px;
+    will-change: transform;
+}
+
+/* Remove the hover transform on image since we're handling it in JS */
+.masonry-item:hover .masonry-item-inner img {
+    transform: none;
+}
+
+/* Custom colors for each item */
+.masonry-item:nth-child(9n+1) {
+    background: linear-gradient(135deg, rgba(var(--card-color-1), 0.05), rgba(var(--card-color-1-2), 0.05));
+    border: 1px solid rgba(var(--card-color-1), 0.5);
+}
+
+.masonry-item:nth-child(9n+2) {
+    background: linear-gradient(135deg, rgba(var(--card-color-2), 0.05), rgba(var(--card-color-2), 0.01));
+    border: 1px solid rgba(var(--card-color-2), 0.5);
+}
+
+.masonry-item:nth-child(9n+3) {
+    background: linear-gradient(135deg, rgba(var(--card-color-3), 0.05), rgba(var(--card-color-3), 0.01));
+    border: 1px solid rgba(var(--card-color-3), 0.5);
+}
+
+.masonry-item:nth-child(9n+4) {
+    background: linear-gradient(135deg, rgba(var(--card-color-4), 0.05), rgba(var(--card-color-4), 0.01));
+    border: 1px solid rgba(var(--card-color-4), 0.5);
+}
+
+.masonry-item:nth-child(9n+5) {
+    background: linear-gradient(135deg, rgba(var(--card-color-5), 0.05), rgba(var(--card-color-5), 0.05));
+    border: 1px solid rgba(var(--card-color-5), 0.5);
+}
+
+.masonry-item:nth-child(9n+6) {
+    background: linear-gradient(135deg, rgba(var(--card-color-6), 0.2), rgba(var(--card-color-6), 0.2));
+    border: 1px solid rgba(var(--card-color-6), 0.5);
+}
+
+.masonry-item:nth-child(9n+7) {
+    background: linear-gradient(135deg, rgba(var(--card-color-7), 0.05), rgba(var(--card-color-7), 0.01));
+    border: 1px solid rgba(108, 186, 94, 0.5);
+}
+
+.masonry-item:nth-child(9n+8) {
+    background: linear-gradient(135deg, rgba(var(--card-color-8), 0.05), rgba(var(--card-color-8), 0.01));
+    border: 1px solid rgba(var(--card-color-8), 0.5);
+}
+
+.masonry-item:nth-child(9n+9) {
+    background: linear-gradient(135deg, rgba(var(--card-color-9), 0.4), rgba(var(--card-color-9), 0.4));
+    border: 1px solid rgba(var(--card-color-9), 0.5);
+}
+
+/* Enhanced hover effects with custom colors */
+.masonry-item:nth-child(9n+1):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-1), 0.03);
+    border-color: rgba(var(--card-color-1), 0.3);
+}
+
+.masonry-item:nth-child(9n+2):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-2), 0.03);
+    border-color: rgba(var(--card-color-2), 0.3);
+}
+
+.masonry-item:nth-child(9n+3):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-3), 0.03);
+    border-color: rgba(var(--card-color-3), 0.3);
+}
+
+.masonry-item:nth-child(9n+4):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-4), 0.03);
+    border-color: rgba(var(--card-color-4), 0.3);
+}
+
+.masonry-item:nth-child(9n+5):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-5), 0.03);
+    border-color: rgba(var(--card-color-5), 0.3);
+}
+
+.masonry-item:nth-child(9n+6):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-6), 0.03);
+    border-color: rgba(var(--card-color-6), 0.3);
+}
+
+.masonry-item:nth-child(9n+7):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-7), 0.03);
+    border-color: rgba(var(--card-color-7), 0.3);
+}
+
+.masonry-item:nth-child(9n+8):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-8), 0.03);
+    border-color: rgba(var(--card-color-8), 0.3);
+}
+
+.masonry-item:nth-child(9n+9):hover {
+    box-shadow: 0 5px 15px rgba(var(--card-color-9), 0.03);
+    border-color: rgba(var(--card-color-9), 0.3);
+}
+
+/* Responsive adjustments for masonry */
+@media (max-width: 1200px) {
+    .masonry-gallery {
+        width: 95%;
+        columns: 3;
+        column-gap: 25px;
+    }
+    
+    .masonry-item {
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 992px) {
+    .masonry-gallery {
+        columns: 2;
+        column-gap: 20px;
+    }
+    
+    .masonry-item {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .masonry-gallery {
+        columns: 1;
+        width: 90%;
+    }
+    
+    .masonry-item {
+        margin-bottom: 20px;
+    }
+}
+
+/* Masonry Lightbox */
+.masonry-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.masonry-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 95%;
+    max-height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-image-container {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 95vh;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+}
+
+.masonry-lightbox.active .lightbox-image-container {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: scale(1.1);
+}
+
+.lightbox-close {
+    top: -60px;
+    right: -60px;
+}
+
+.lightbox-prev {
+    left: -80px;
+    font-size: 60px;
+}
+
+.lightbox-next {
+    right: -80px;
+    font-size: 60px;
+}
+
+@media (max-width: 992px) {
+    .lightbox-close {
+        top: -50px;
+        right: 0;
+    }
+    
+    .lightbox-prev {
+        left: 10px;
+    }
+    
+    .lightbox-next {
+        right: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .lightbox-image {
+        max-height: 80vh;
+    }
+    
+    .lightbox-image-container {
+        padding: 15px;
+        max-width: 90%;
+    }
+    
+    .lightbox-close {
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+    }
+    
+    .lightbox-prev,
+    .lightbox-next {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Fix hover behavior for the eighth item */
+.masonry-item:nth-child(8):hover .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(0);
+    /* Preserve the positioning during hover */
+}
+
+/* Fix hover behavior for the eighth item with tilt effect */
+.masonry-item.tilt-card:nth-child(8) .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(0);
+}
+
+.masonry-item.tilt-card:nth-child(8):hover .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(20px);
+}
+
+/* Specific handling for the eighth item's tilt effect */
+.masonry-item.tilt-card:nth-child(8) .tilt-card-inner {
+    overflow: hidden;
+}
+
+/* Fix hover behavior for the cloned eighth item */
+.gallery-item.clone:nth-child(9n+8) .gallery-item-inner img,
+.masonry-item.clone:nth-child(9n+8) .gallery-item-inner img {
+    width: 290%;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateZ(30px);
+}
+
+/* Fix hover behavior for the cloned eighth item */
+.masonry-item.clone:nth-child(9n+8):hover .masonry-item-inner img {
+    transform: translate(-50%, -50%) translateZ(30px) !important;
+    /* Preserve the positioning during hover */
+}
+
+/* Make sure gallery-item-inner has proper positioning for absolute positioned children */
+.masonry-item:nth-child(5) .masonry-item-inner,
+.masonry-item:nth-child(8) .masonry-item-inner,
+.masonry-item.clone:nth-child(9n+5) .masonry-item-inner,
+.masonry-item.clone:nth-child(9n+8) .masonry-item-inner {
+    position: relative;
+    overflow: hidden;
+}
+
+/* React Bits Split Text Animation for Navigation */
+.split-text-link {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.split-text-container {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.split-text {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    animation: splitTextReveal var(--split-text-animation-duration) cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+nav ul li:nth-child(1) .split-text { animation-delay: calc(var(--split-text-animation-delay) + 0.05s); }
+nav ul li:nth-child(2) .split-text { animation-delay: calc(var(--split-text-animation-delay) + 0.1s); }
+nav ul li:nth-child(3) .split-text { animation-delay: calc(var(--split-text-animation-delay) + 0.15s); }
+nav ul li:nth-child(4) .split-text { animation-delay: calc(var(--split-text-animation-delay) + 0.2s); }
+nav ul li:nth-child(5) .split-text { animation-delay: calc(var(--split-text-animation-delay) + 0.25s); }
+
+@keyframes splitTextReveal {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* React Bits Tilted Card & Glare Hover Animation for Logo */
+.tilt-card {
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.tilt-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glare-x: 50%;
+    --glare-y: 50%;
+    --glare-angle: 135deg;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
+}
+
+.tilt-card-glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+        var(--glare-angle), 
+        rgba(255, 255, 255, 0.6) 0%, 
+        rgba(255, 255, 255, 0) 80%
+    );
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: overlay;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.tilt-card:hover .tilt-card-glare {
+    opacity: 0.5;
+}
+
+/* Specific styles for masonry items with tilt effect */
+.masonry-item.tilt-card {
+    overflow: visible;
+    z-index: 1;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    cursor: default; /* Change cursor to default since images aren't clickable */
+}
+
+.masonry-item.tilt-card:hover {
+    z-index: 10;
+}
+
+.masonry-item.tilt-card .masonry-item-inner {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    background-color: var(--bg-color);
+    pointer-events: auto; /* Ensure the inner container still responds to mouse events */
+}
+
+.masonry-item.tilt-card:hover .masonry-item-inner {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.masonry-item.tilt-card img {
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+    transform-origin: center center;
+    pointer-events: none; /* Prevent clicks on images */
+}
+
+/* Adjust the glare effect for masonry items */
+.masonry-item.tilt-card .tilt-card-glare {
+    border-radius: 8px;
+    mix-blend-mode: soft-light;
+}
+
+.masonry-item.tilt-card:hover .tilt-card-glare {
+    opacity: 0.7;
+}
+
+/* Ensure masonry items maintain their position */
+.masonry-gallery {
+    position: relative;
+    z-index: 1;
+}
+
+/* React Bits Scroll Float Animation for Section Headings */
+.scroll-float-heading {
+    position: relative;
+    overflow: visible;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+    height: 80px; /* Fixed height to prevent layout shifts */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+    transform-style: preserve-3d;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-float-heading.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Simple underline for section titles */
+
+.scroll-float-text {
+    display: inline-block;
+    position: relative;
+    font-family: var(--heading-font);
+    font-size: var(--h2-size);
+    color: var(--primary);
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transform-origin: center center;
+    will-change: transform;
+    transform: translateY(0) rotateX(0) scale(1);
+    transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), 
+                color 0.3s ease, 
+                text-shadow 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --underline-width: 30px;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    padding: 0.2em 0.5em;
+}
+
+.scroll-float-text::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--primary);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                background 0.3s ease, 
+                transform 0.3s ease;
+    will-change: width;
+    border-radius: 1.5px;
+}
+
+.scroll-float-heading.fade-in .scroll-float-text::after {
+    width: 80%;
+    transition-delay: 0.2s;
+}
+
+.scroll-float-heading:hover .scroll-float-text::after {
+    width: 100%;
+    background: var(--accent);
+}
+
+/* Remove the default section h2 styling since we're replacing it */
+.section h2::after {
+    display: none;
+}
+
+.section h2 {
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+}
+/* Fade Up Animation for Gallery Images */
+@keyframes fadeUpImage {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Services Section Styling */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.service-card {
+    position: relative;
+    height: 280px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+    z-index: 1;
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none; /* Reset initial animation */
+}
+
+.service-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glare-x: 50%;
+    --glare-y: 50%;
+    --glare-angle: 135deg;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
+    background-color: rgba(var(--bg-rgb), 0.6);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.service-card-glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+        var(--glare-angle), 
+        rgba(255, 255, 255, 0.6) 0%, 
+        rgba(255, 255, 255, 0) 80%
+    );
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: overlay;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.service-card:hover .service-card-glare {
+    opacity: 0.5;
+}
+
+.service-content {
+    position: relative;
+    padding: 2rem;
+    z-index: 3;
+}
+
+.service-title {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.service-title h3 {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #577371;
+    margin: 0 0 0.75rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.2s;
+    will-change: transform, opacity;
+    letter-spacing: 0.02em;
+}
+
+.service-underline {
+    height: 2px;
+    width: 0;
+    background-color: #577371;
+    position: relative;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: width;
+}
+
+.service-description {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.4s;
+    will-change: transform, opacity;
+}
+
+.service-description p {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #577371;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+/* Animation states */
+.service-card.visible .service-underline {
+    width: 100%;
+}
+
+.service-card.visible .service-title h3 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-card.visible .service-description {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Apply floating animation after initial appearance */
+.service-card.visible.floating {
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+.service-card.visible:nth-child(2).floating {
+    animation-delay: 0.5s;
+}
+
+.service-card.visible:nth-child(3).floating {
+    animation-delay: 1s;
+}
+
+.service-card.visible:nth-child(4).floating {
+    animation-delay: 1.5s;
+}
+
+.service-card.visible:nth-child(5).floating {
+    animation-delay: 2s;
+}
+
+@keyframes floatCard {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .services-container {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .service-card {
+        height: 300px;
+    }
+    
+    .service-title h3 {
+        font-size: 1.6rem;
+    }
+    
+    .service-description p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .services-container {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    .service-card {
+        height: auto;
+        min-height: 250px;
+    }
+    
+    .service-content {
+        padding: 1.5rem;
+    }
+    
+    .service-title h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Mobile responsive adjustments handled in existing media queries */
+
+.scroll-float-heading:hover .scroll-float-text {
+    color: var(--accent);
+    text-shadow: 0 0 8px rgba(177, 156, 217, 0.5); /* Using the actual RGB values of --accent: #B19CD9 */
+    transform: translateY(-2px);
+}
+
+/* Hero title styling */
+.title-line {
+    display: inline-block;
+}
+
+/* On desktop and larger screens, display all lines inline */
+@media (min-width: 768px) {
+    .title-line {
+        display: inline;
+    }
+    
+    /* Add proper spacing between words */
+    .line1::after {
+        content: " ";
+        white-space: pre;
+    }
+    
+    .line2::after {
+        content: " ";
+        white-space: pre;
+    }
+}
+
+/* On mobile, display lines as blocks with specific alignment */
+@media (max-width: 767px) {
+    .hero h1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.4;
+        font-size: clamp(1.8rem, 5vw, 2.5rem); /* Ensure title is large enough */
+    }
+    
+    .hero h2 {
+        font-size: clamp(1rem, 3vw, 1.4rem); /* Make subtitle smaller */
+    }
+    
+    .title-line {
+        display: block;
+    }
+    
+    /* First line (MUSEUM) - centered */
+    .line1 {
+        align-self: center;
+    }
+    
+    /* Second line (TO) - indented to the right */
+    .line2 {
+        align-self: center;
+        margin-right: 0%;
+    }
+    
+    /* Third line (MAUSOLEUM) - centered */
+    .line3 {
+        align-self: center;
+    }
+}
+
+/* Additional adjustments for very small screens */
+@media (max-width: 375px) {
+    .hero h1 {
+        font-size: clamp(1.6rem, 4.5vw, 2rem); /* Larger font size for title */
+    }
+    
+    .hero h2 {
+        font-size: clamp(0.9rem, 2.5vw, 1.2rem); /* Smaller subtitle */
+        margin-top: 20px; /* Add space between title and subtitle */
+    }
+    
+    .line2 {
+        align-self: center;
+    }
+    
+    /* Increase size of each character for better visibility */
+    .rotate-text {
+        font-size: 1.6rem;
+    }
+}

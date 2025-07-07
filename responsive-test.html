@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .viewport-size {
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .instructions {
+            background-color: #e6f7ff;
+            padding: 15px;
+            border-left: 4px solid #1890ff;
+            margin-bottom: 20px;
+        }
+        
+        .test-iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #096dd9;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Responsive Design Test</h1>
+        
+        <div class="viewport-size" id="viewport-size">
+            Current viewport size: <span id="width">-</span>px × <span id="height">-</span>px
+        </div>
+        
+        <div class="instructions">
+            <p><strong>Instructions:</strong></p>
+            <ol>
+                <li>This page helps you test how your website looks on different screen sizes.</li>
+                <li>Use the buttons below to simulate different device sizes.</li>
+                <li>Check that the logo and navigation are hidden on mobile screens (width ≤ 768px).</li>
+                <li>Verify that the mobile menu button appears on smaller screens.</li>
+                <li>Test the mobile menu functionality by clicking the menu button.</li>
+                <li><strong>Text Scaling:</strong> Observe how text scales proportionally across different screen sizes while maintaining the same professional style.</li>
+            </ol>
+        </div>
+        
+        <div class="controls">
+            <button onclick="resizeIframe('320px', '568px')">iPhone SE (320×568)</button>
+            <button onclick="resizeIframe('375px', '667px')">iPhone 8 (375×667)</button>
+            <button onclick="resizeIframe('414px', '896px')">iPhone 11 (414×896)</button>
+            <button onclick="resizeIframe('768px', '1024px')">iPad (768×1024)</button>
+            <button onclick="resizeIframe('1024px', '768px')">iPad Landscape</button>
+            <button onclick="resizeIframe('100%', '500px')">Full Width</button>
+        </div>
+        
+        <iframe src="index.html" id="test-iframe" class="test-iframe"></iframe>
+    </div>
+    
+    <script>
+        // Update viewport size display
+        function updateViewportSize() {
+            document.getElementById('width').textContent = window.innerWidth;
+            document.getElementById('height').textContent = window.innerHeight;
+        }
+        
+        // Resize iframe to simulate different devices
+        function resizeIframe(width, height) {
+            const iframe = document.getElementById('test-iframe');
+            iframe.style.width = width;
+            iframe.style.height = height;
+        }
+        
+        // Initial update
+        updateViewportSize();
+        
+        // Update on resize
+        window.addEventListener('resize', updateViewportSize);
+    </script>
+</body>
+</html> 

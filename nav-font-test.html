@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darker Grotesque Font Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            font-family: 'Darker Grotesque', sans-serif;
+            color: #b19cd9;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        
+        .navigation {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-list li {
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            font-family: 'Darker Grotesque', sans-serif;
+            color: #8b7c8b;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #b19cd9;
+        }
+        
+        .font-weights {
+            margin-top: 40px;
+        }
+        
+        .font-weight {
+            font-family: 'Darker Grotesque', sans-serif;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Darker Grotesque Font Test for Navigation</h1>
+    
+    <div class="status" id="fontStatus">
+        Checking font status...
+    </div>
+    
+    <div class="navigation">
+        <ul class="nav-list">
+            <li><a href="#" class="nav-link">Home</a></li>
+            <li><a href="#" class="nav-link">Designs</a></li>
+            <li><a href="#" class="nav-link">Services</a></li>
+            <li><a href="#" class="nav-link">Pricing</a></li>
+            <li><a href="#" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+    
+    <p>The navigation above should be using the Darker Grotesque font.</p>
+    
+    <div class="font-weights">
+        <h2>Font Weight Examples:</h2>
+        <div class="font-weight" style="font-weight: 300;">Weight 300 (Light): ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+        <div class="font-weight" style="font-weight: 400;">Weight 400 (Regular): ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+        <div class="font-weight" style="font-weight: 500;">Weight 500 (Medium): ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+        <div class="font-weight" style="font-weight: 600;">Weight 600 (Semi-Bold): ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+        <div class="font-weight" style="font-weight: 700;">Weight 700 (Bold): ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    </div>
+    
+    <script>
+        document.fonts.ready.then(function() {
+            const status = document.getElementById('fontStatus');
+            
+            if (document.fonts.check('1em "Darker Grotesque"')) {
+                status.innerHTML = '✓ Darker Grotesque font loaded successfully!';
+                status.style.backgroundColor = '#e6ffe6';
+                status.style.border = '1px solid #99cc99';
+            } else {
+                status.innerHTML = '✗ Darker Grotesque font failed to load. Using fallback font instead.';
+                status.style.backgroundColor = '#ffe6e6';
+                status.style.border = '1px solid #cc9999';
+            }
+        });
+    </script>
+</body>
+</html> 

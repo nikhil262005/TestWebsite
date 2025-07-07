@@ -1,0 +1,31 @@
+/* Font definitions */
+@font-face {
+    font-family: 'Le Jour Serif';
+    src: url('../fonts/LeJourSerif.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Navigation font check */
+.nav-fonts-loaded nav ul li a {
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+.nav-fonts-failed nav ul li a {
+    font-family: Arial, sans-serif;
+}
+
+/* Fallback styles */
+.fonts-failed .hero h1,
+.fonts-failed .hero h2 {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+}
+
+/* Font loading detection */
+.fonts-loaded .hero h1,
+.fonts-loaded .hero h2 {
+    font-family: 'Le Jour Serif', serif;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+} 
